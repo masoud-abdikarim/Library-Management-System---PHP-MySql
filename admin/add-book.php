@@ -12,16 +12,16 @@ if(isset($_POST['add']))
 {
 $bookname=$_POST['bookname'];
 $category=$_POST['category'];
-$author=$_POST['author'];
-$isbn=$_POST['isbn'];
+$author=NULL;
+$isbn=NULL;
 $price=$_POST['price'];
 $copies=$_POST['copies'];
-$sql="INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber,BookPrice,Copies) VALUES(:bookname,:category,:author,:isbn,:price,:copies)";
+$sql="INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber,BookPrice,Copies,IssuedCopies) VALUES(:bookname,:category,:author,:isbn,:price,:copies,0)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
 $query->bindParam(':category',$category,PDO::PARAM_STR);
-$query->bindParam(':author',$author,PDO::PARAM_STR);
-$query->bindParam(':isbn',$isbn,PDO::PARAM_STR);
+$query->bindValue(':author',$author,PDO::PARAM_NULL);
+$query->bindValue(':isbn',$isbn,PDO::PARAM_NULL);
 $query->bindParam(':price',$price,PDO::PARAM_STR);
 $query->bindParam(':copies',$copies,PDO::PARAM_STR);
 $query->execute();
@@ -61,7 +61,6 @@ header('location:manage-books.php');
       <!------MENU SECTION START-->
 <?php include('includes/header.php');?>
 <!-- MENU SECTION END-->
-    <div class="content-wra
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
@@ -72,7 +71,7 @@ header('location:manage-books.php');
 
 </div>
 <div class="row">
-<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3"">
+<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 <div class="panel panel-info">
 <div class="panel-heading">
 Book Info
@@ -106,34 +105,9 @@ foreach($results as $result)
 </div>
 
 
-<div class="form-group">
-<label> Publication<span style="color:red;">*</span></label>
-<select class="form-control" name="author" required="required">
-<option value=""> Select Publication</option>
-<?php 
-
-$sql = "SELECT * from  tblauthors ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{               ?>  
-<option value="<?php echo htmlentities($result->id);?>"><?php echo htmlentities($result->AuthorName);?></option>
- <?php }} ?> 
-</select>
-</div>
-
-<div class="form-group">
-<label>ISBN Number<span style="color:red;">*</span></label>
-<input class="form-control" type="text" name="isbn"  required="required" autocomplete="off"  />
-<p class="help-block">An ISBN is an International Standard Book Number.ISBN Must be unique</p>
-</div>
  
  <div class="form-group">
- <label>No of Copies<span style="color:red;">*</span></label>
+ <label>Available Books<span style="color:red;">*</span></label>
  <input class="form-control" type="text" name="copies" autocomplete="off"   required="required" />
  </div>
  

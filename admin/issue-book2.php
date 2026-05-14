@@ -54,6 +54,22 @@ header('location:manage-issued-books.php');
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- SELECT2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            padding: 5px 15px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 8px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 38px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px !important;
+        }
+    </style>
 <script>
 // function for get student name
 function getstudent() {
@@ -99,7 +115,6 @@ error:function (){}
       <!------MENU SECTION START-->
 <?php include('includes/header.php');?>
 <!-- MENU SECTION END-->
-    <div class="content-wra
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
@@ -110,7 +125,7 @@ error:function (){}
 
 </div>
 <div class="row">
-<div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-1"">
+<div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-1">
 <div class="panel panel-info">
 <div class="panel-heading">
 Issue a New Book
@@ -128,8 +143,22 @@ $bookid=$_GET['ISBNNumber'];
 $stdid=$_GET['StudentID'];
 ?>										
 <div class="form-group">
-<label>Student id<span style="color:red;">*</span></label>
-<input class="form-control" type="text" name="studentid" id="studentid" value="<?php echo htmlentities($stdid);?>" onBlur="getstudent()" required />
+<label>Student Name<span style="color:red;">*</span></label>
+<select class="form-control select2" name="studentid" id="studentid" onChange="getstudent()" required>
+    <option value="">Search and select student...</option>
+    <?php 
+    $sql_std = "SELECT StudentId, FullName FROM tblstudents WHERE Status=1";
+    $query_std = $dbh->prepare($sql_std);
+    $query_std->execute();
+    $results_std = $query_std->fetchAll(PDO::FETCH_OBJ);
+    if($query_std->rowCount() > 0) {
+        foreach($results_std as $result_std) {
+            $selected = ($stdid == $result_std->StudentId) ? 'selected' : '';
+            echo '<option value="'.htmlentities($result_std->StudentId).'" '.$selected.'>'.htmlentities($result_std->FullName).' (ID: '.htmlentities($result_std->StudentId).')</option>';
+        }
+    }
+    ?>
+</select>
 </div>
 
 <div class="form-group">
@@ -166,8 +195,22 @@ else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlen
     <script src="assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
+    <!-- SELECT2 SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
       <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Search and select student...",
+                allowClear: true
+            });
+            // Trigger change if prefilled from GET parameters
+            if ($('#studentid').val() !== '') {
+                getstudent();
+            }
+        });
+    </script>
 
 </body>
 </html>

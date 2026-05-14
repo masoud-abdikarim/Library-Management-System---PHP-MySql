@@ -32,10 +32,7 @@ echo '<script>alert("Your profile has been updated")</script>';
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <!--[if IE]>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <![endif]-->
-    <title>Online Library Management System | Student Signup</title>
+    <title>Online Library Management System | My Profile</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME STYLE  -->
@@ -54,17 +51,15 @@ echo '<script>alert("Your profile has been updated")</script>';
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">My Profile</h4>
-                
-                            </div>
-
+                <h4 class="header-line">MY PROFILE</h4>
+            </div>
         </div>
              <div class="row">
            
-<div class="col-md-9 col-md-offset-1">
-               <div class="panel panel-danger">
+<div class="col-md-8 col-md-offset-2">
+               <div class="panel panel-default">
                         <div class="panel-heading">
-                           My Profile
+                           Personal Information
                         </div>
                         <div class="panel-body">
                             <form name="signup" method="post">
@@ -81,51 +76,54 @@ if($query->rowCount() > 0)
 foreach($results as $result)
 {               ?>  
 
-<div class="form-group">
-<label>Student ID : </label>
-<?php echo htmlentities($result->StudentId);?>
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-6">
+        <label>Student ID : </label>
+        <p class="form-control-static" style="font-weight: 600; color: #3b82f6;"><?php echo htmlentities($result->StudentId);?></p>
+    </div>
+    <div class="col-md-6">
+        <label>Profile Status : </label>
+        <p class="form-control-static">
+            <?php if($result->Status==1){?>
+            <span class="label label-success">Active</span>
+            <?php } else { ?>
+            <span class="label label-danger">Blocked</span>
+            <?php }?>
+        </p>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-6">
+        <label>Registration Date : </label>
+        <p class="form-control-static" style="color: #6b7280;"><?php echo htmlentities($result->RegDate);?></p>
+    </div>
+    <?php if($result->UpdationDate!=""){?>
+    <div class="col-md-6">
+        <label>Last Updated : </label>
+        <p class="form-control-static" style="color: #6b7280;"><?php echo htmlentities($result->UpdationDate);?></p>
+    </div>
+    <?php } ?>
 </div>
 
 <div class="form-group">
-<label>Reg Date : </label>
-<?php echo htmlentities($result->RegDate);?>
-</div>
-<?php if($result->UpdationDate!=""){?>
-<div class="form-group">
-<label>Last Updation Date : </label>
-<?php echo htmlentities($result->UpdationDate);?>
-</div>
-<?php } ?>
-
-
-<div class="form-group">
-<label>Profile Status : </label>
-<?php if($result->Status==1){?>
-<span style="color: green">Active</span>
-<?php } else { ?>
-<span style="color: red">Blocked</span>
-<?php }?>
-</div>
-
-
-<div class="form-group">
-<label>Enter Full Name</label>
+<label>Full Name</label>
 <input class="form-control" type="text" name="fullanme" value="<?php echo htmlentities($result->FullName);?>" autocomplete="off" required />
 </div>
 
-
 <div class="form-group">
-<label>Mobile Number :</label>
+<label>Mobile Number</label>
 <input class="form-control" type="text" name="mobileno" maxlength="10" value="<?php echo htmlentities($result->MobileNumber);?>" autocomplete="off" required />
 </div>
                                         
 <div class="form-group">
-<label>Enter Email</label>
+<label>Email Address</label>
 <input class="form-control" type="email" name="email" id="emailid" value="<?php echo htmlentities($result->EmailId);?>"  autocomplete="off" required readonly />
+<p class="help-block" style="font-size: 12px;">Email cannot be changed.</p>
 </div>
 <?php }} ?>
-                              
-<button type="submit" name="update" class="btn btn-primary" id="submit">Update Now </button>
+                               
+<button type="submit" name="update" class="btn btn-primary btn-block" id="submit" style="margin-top: 20px; padding: 12px;">Update Profile </button>
 
                                     </form>
                             </div>
@@ -136,9 +134,7 @@ foreach($results as $result)
     </div>
      <!-- CONTENT-WRAPPER SECTION END-->
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
 </html>

@@ -12,17 +12,17 @@ if(isset($_POST['update']))
 {
 $bookname=$_POST['bookname'];
 $category=$_POST['category'];
-$author=$_POST['author'];
-$isbn=$_POST['isbn'];
+$author=NULL;
+$isbn=NULL;
 $price=$_POST['price'];
 $bookid=intval($_GET['bookid']);
-$Copies=($_GET['Copies']);
+$Copies=$_POST['copies'];
 $sql="update tblbooks set BookName=:bookname,CatId=:category,AuthorId=:author,ISBNNumber=:isbn,BookPrice=:price,Copies=:Copies where id=:bookid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
 $query->bindParam(':category',$category,PDO::PARAM_STR);
-$query->bindParam(':author',$author,PDO::PARAM_STR);
-$query->bindParam(':isbn',$isbn,PDO::PARAM_STR);
+$query->bindValue(':author',$author,PDO::PARAM_NULL);
+$query->bindValue(':isbn',$isbn,PDO::PARAM_NULL);
 $query->bindParam(':price',$price,PDO::PARAM_STR);
 $query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
 $query->bindParam(':Copies',$Copies,PDO::PARAM_STR);
@@ -55,7 +55,6 @@ header('location:manage-books.php');
       <!------MENU SECTION START-->
 <?php include('includes/header.php');?>
 <!-- MENU SECTION END-->
-    <div class="content-wra
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
@@ -66,7 +65,7 @@ header('location:manage-books.php');
 
 </div>
 <div class="row">
-<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3"">
+<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 <div class="panel panel-info">
 <div class="panel-heading">
 Book Info
@@ -75,7 +74,7 @@ Book Info
 <form role="form" method="post">
 <?php 
 $bookid=intval($_GET['bookid']);
-$sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblbooks.Copies,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
+$sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblbooks.Copies,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId left join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
 $query = $dbh -> prepare($sql);
 $query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
 $query->execute();
@@ -123,39 +122,9 @@ else
 </div>
 
 
-<div class="form-group">
-<label> Publication<span style="color:red;">*</span></label>
-<select class="form-control" name="author" required="required">
-<option value="<?php echo htmlentities($result->athrid);?>"> <?php echo htmlentities($athrname=$result->AuthorName);?></option>
-<?php 
-
-$sql2 = "SELECT * from  tblauthors ";
-$query2 = $dbh -> prepare($sql2);
-$query2->execute();
-$result2=$query2->fetchAll(PDO::FETCH_OBJ);
-if($query2->rowCount() > 0)
-{
-foreach($result2 as $ret)
-{           
-if($athrname==$ret->AuthorName)
-{
-continue;
-} else{
-
-    ?>  
-<option value="<?php echo htmlentities($ret->id);?>"><?php echo htmlentities($ret->AuthorName);?></option>
- <?php }}} ?> 
-</select>
-</div>
-
-<div class="form-group">
-<label>ISBN Number<span style="color:red;">*</span></label>
-<input class="form-control" type="text" name="isbn" value="<?php echo htmlentities($result->ISBNNumber);?>"  required="required" />
-<p class="help-block">An ISBN is an International Standard Book Number.ISBN Must be unique</p>
-</div>
  
   <div class="form-group">
- <label>No of Copies<span style="color:red;">*</span></label>
+ <label>Available Books<span style="color:red;">*</span></label>
  <input class="form-control" type="text" name="copies" value="<?php echo htmlentities($result->Copies);?>"   required="required" />
  </div>
   

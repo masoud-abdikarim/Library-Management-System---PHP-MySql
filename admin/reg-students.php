@@ -45,7 +45,7 @@ header('location:reg-students.php');
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Online Library Management System | Manage Reg Students</title>
+    <title>Online Library Management System | List of Users</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME STYLE  -->
@@ -66,7 +66,7 @@ header('location:reg-students.php');
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">Manage Reg Students</h4>
+                <h4 class="header-line">List of Users</h4>
     </div>
 
 
@@ -76,7 +76,7 @@ header('location:reg-students.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          Reg Students
+                          List of Users
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">

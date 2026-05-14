@@ -33,66 +33,88 @@ else{?>
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">User DASHBOARD</h4>
-                
-                            </div>
+                <h4 class="header-line">USER DASHBOARD</h4>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+                    <h2 style="margin: 0; font-weight: 700;">Welcome back, <?php echo htmlentities($_SESSION['login']);?>!</h2>
+                    <p style="margin-top: 10px; opacity: 0.9; font-size: 16px;">Explore the library, check your issued books, or request new ones from your dashboard.</p>
+                </div>
+            </div>
         </div>
              
              <div class="row">
-
-
-
-            
-                 <div class="col-md-3 col-sm-3 col-xs-6">
-                      <div class="alert alert-info back-widget-set text-center">
-                            <i class="fa fa-bars fa-5x"></i>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="alert back-widget-set text-center" style="background-color: #3b82f6; color: #fff; border: none;">
+                            <i class="fa fa-book fa-3x"></i>
 <?php 
 $sid=$_SESSION['stdid'];
-$sql1 ="SELECT id from tblissuedbookdetails where StudentID=:sid";
+$sql1 ="SELECT id from tblissuedbookdetails where StudentID=:sid AND ReturnStatus IN (0,2)";
 $query1 = $dbh -> prepare($sql1);
 $query1->bindParam(':sid',$sid,PDO::PARAM_STR);
 $query1->execute();
-$results1=$query1->fetchAll(PDO::FETCH_OBJ);
-$issuedbooks=$query1->rowCount();
+$currentlyBorrowed=$query1->rowCount();
 ?>
-
-                            <h3><?php echo htmlentities($issuedbooks);?> </h3>
-                            Book Issued
+                            <h3><?php echo htmlentities($currentlyBorrowed);?> </h3>
+                            <p>Currently Borrowed</p>
                         </div>
                     </div>
              
-               <div class="col-md-3 col-sm-3 col-xs-6">
-                      <div class="alert alert-warning back-widget-set text-center">
-                            <i class="fa fa-recycle fa-5x"></i>
+               <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="alert back-widget-set text-center" style="background-color: #f59e0b; color: #fff; border: none;">
+                            <i class="fa fa-clock-o fa-3x"></i>
 <?php 
-$rsts=0;
-$sql2 ="SELECT id from tblissuedbookdetails where StudentID=:sid and ReturnStatus=:rsts";
+$sql2 ="SELECT id from tblissuedbookdetails where StudentID=:sid and ReturnStatus=2";
 $query2 = $dbh -> prepare($sql2);
 $query2->bindParam(':sid',$sid,PDO::PARAM_STR);
-$query2->bindParam(':rsts',$rsts,PDO::PARAM_STR);
 $query2->execute();
-$results2=$query2->fetchAll(PDO::FETCH_OBJ);
-$returnedbooks=$query2->rowCount();
+$pendingReturn=$query2->rowCount();
 ?>
+                            <h3><?php echo htmlentities($pendingReturn);?></h3>
+                           <p>Pending Return Approval</p>
+                        </div>
+                    </div>
 
-                            <h3><?php echo htmlentities($returnedbooks);?></h3>
-                          Books Not Returned Yet
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="alert back-widget-set text-center" style="background-color: #10b981; color: #fff; border: none;">
+                            <i class="fa fa-check-circle fa-3x"></i>
+<?php 
+$sql3 ="SELECT id from tblissuedbookdetails where StudentID=:sid and ReturnStatus=1";
+$query3 = $dbh -> prepare($sql3);
+$query3->bindParam(':sid',$sid,PDO::PARAM_STR);
+$query3->execute();
+$returnedBooks=$query3->rowCount();
+?>
+                            <h3><?php echo htmlentities($returnedBooks);?></h3>
+                            <p>Books Returned</p>
                         </div>
                     </div>
         </div>
 
-
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Quick Actions
+                    </div>
+                    <div class="panel-body" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <a href="browse-books.php" class="btn btn-primary"><i class="fa fa-search"></i> Browse Books</a>
+                        <a href="issued-books.php" class="btn btn-warning"><i class="fa fa-list"></i> My Borrowed Books</a>
+                        <a href="borrow-history.php" class="btn btn-success"><i class="fa fa-history"></i> Borrow History</a>
+                        <a href="my-profile.php" class="btn btn-info"><i class="fa fa-user"></i> Update Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
             
     </div>
     </div>
      <!-- CONTENT-WRAPPER SECTION END-->
-    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
 </html>

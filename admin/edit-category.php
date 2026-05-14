@@ -47,7 +47,6 @@ header('location:manage-categories.php');
       <!------MENU SECTION START-->
 <?php include('includes/header.php');?>
 <!-- MENU SECTION END-->
-    <div class="content-wra
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
@@ -58,7 +57,7 @@ header('location:manage-categories.php');
 
 </div>
 <div class="row">
-<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3"">
+<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 <div class="panel panel-info">
 <div class="panel-heading">
 Category Info

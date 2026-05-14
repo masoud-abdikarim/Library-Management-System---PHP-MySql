@@ -12,32 +12,46 @@ if(isset($_POST['issue']))
 {
 $studentid=strtoupper($_POST['studentid']);
 $bookid=$_POST['bookdetails'];
-$sql="INSERT INTO  tblissuedbookdetails(StudentID,BookId) VALUES(:studentid,:bookid)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':studentid',$studentid,PDO::PARAM_STR);
-$query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$_SESSION['msg']="Book issued successfully";
+$expectedreturndate = $_POST['expectedreturndate'];
+$status = 0; // 0 = Borrowed
 
+// Check availability
+$sql_check = "SELECT Copies, IssuedCopies FROM tblbooks WHERE id=:bookid";
+$query_check = $dbh->prepare($sql_check);
+$query_check->bindParam(':bookid',$bookid,PDO::PARAM_STR);
+$query_check->execute();
+$book_data = $query_check->fetch(PDO::FETCH_OBJ);
 
-$sql="update tblbooks set IssuedCopies=IssueCopies-1 where id=:bookid";
-$query = $dbh->prepare($sql);
-$query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
-$query->execute();
+if($book_data->IssuedCopies < $book_data->Copies) {
+    $sql="INSERT INTO tblissuedbookdetails(StudentID,BookId,ExpectedReturnDate,ReturnStatus) VALUES(:studentid,:bookid,:expectedreturndate,:status)";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':studentid',$studentid,PDO::PARAM_STR);
+    $query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
+    $query->bindParam(':expectedreturndate',$expectedreturndate,PDO::PARAM_STR);
+    $query->bindParam(':status',$status,PDO::PARAM_STR);
+    $query->execute();
+    $lastInsertId = $dbh->lastInsertId();
 
+    if($lastInsertId)
+    {
+        // Update issued copies count
+        $sql_update="UPDATE tblbooks SET IssuedCopies = IssuedCopies + 1 WHERE id=:bookid";
+        $query_update = $dbh->prepare($sql_update);
+        $query_update->bindParam(':bookid',$bookid,PDO::PARAM_STR);
+        $query_update->execute();
 
-
-header('location:manage-issued-books.php');
+        $_SESSION['msg']="Book issued successfully";
+        header('location:manage-issued-books.php');
+    }
+    else 
+    {
+        $_SESSION['error']="Something went wrong. Please try again";
+        header('location:manage-issued-books.php');
+    }
+} else {
+    $_SESSION['error']="Book out of stock!";
+    header('location:manage-issued-books.php');
 }
-else 
-{
-$_SESSION['error']="Something went wrong. Please try again";
-header('location:manage-issued-books.php');
-}
-
 }
 ?>
 <!DOCTYPE html>
@@ -56,6 +70,22 @@ header('location:manage-issued-books.php');
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- SELECT2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            padding: 5px 15px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 8px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 38px !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px !important;
+        }
+    </style>
 <script>
 // function for get student name
 function getstudent() {
@@ -101,69 +131,88 @@ error:function (){}
       <!------MENU SECTION START-->
 <?php include('includes/header.php');?>
 <!-- MENU SECTION END-->
-    <div class="content-wra
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">Issue a New Book</h4>
-                
-                            </div>
-
-</div>
-<div class="row">
-<div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-1"">
-<div class="panel panel-info">
-<div class="panel-heading">
-Issue a New Book
-</div>
-<div class="panel-body">
-<form role="form" method="post">
-
-<div class="form-group">
-<label>Student id<span style="color:red;">*</span></label>
-<input class="form-control" type="text" name="studentid" id="studentid" onBlur="getstudent()" autocomplete="off"  required />
-</div>
-
-<div class="form-group">
-<span id="get_student_name" style="font-size:16px;"></span> 
-</div>
-
-
-
-
-
-<div class="form-group">
-<label>Book ID<span style="color:red;">*</span></label>
-<input class="form-control" type="text" name="bookid" id="bookid" onBlur="getbook()"  required="required" />
-</div>
-
- <div class="form-group">
-  <label>Book Title<span style="color:red;">*</span></label>
-  <select  class="form-control" name="bookdetails" id="get_book_name" readonly>
-   
- </select>
- </div>
-  <div class="form-group">
-<button type="submit" name="issue" id="submit" class="btn btn-info">Issue Book </button>
-</div>
-                            </div>
-							     </form>
-                        </div>
-                            </div>
-
+            </div>
         </div>
-   
+        
+        <div class="row">
+            <div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-1">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Issue a New Book
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" method="post">
+
+                            <div class="form-group">
+                                <label>Student Name / Email<span style="color:red;">*</span></label>
+                                <select class="form-control select2" name="studentid" id="studentid" onChange="getstudent()" required>
+                                    <option value="">Search by name or email...</option>
+                                    <?php 
+                                    $sql_std = "SELECT StudentId, FullName, EmailId FROM tblstudents WHERE Status=1";
+                                    $query_std = $dbh->prepare($sql_std);
+                                    $query_std->execute();
+                                    $results_std = $query_std->fetchAll(PDO::FETCH_OBJ);
+                                    if($query_std->rowCount() > 0) {
+                                        foreach($results_std as $result_std) {
+                                            echo '<option value="'.htmlentities($result_std->StudentId).'">'.htmlentities($result_std->FullName).' - '.htmlentities($result_std->EmailId).' (ID: '.htmlentities($result_std->StudentId).')</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <span id="get_student_name" style="font-size:16px;"></span> 
+                            </div>
+
+                            <div class="form-group">
+                                <label>Book ID<span style="color:red;">*</span></label>
+                                <input class="form-control" type="text" name="bookid" id="bookid" onBlur="getbook()"  required="required" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Book Title<span style="color:red;">*</span></label>
+                                <select  class="form-control" name="bookdetails" id="get_book_name" readonly>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Expected Return Date<span style="color:red;">*</span></label>
+                                <input class="form-control" type="date" name="expectedreturndate" required />
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" name="issue" id="submit" class="btn btn-primary" style="padding: 12px 30px;">Issue Book </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
      <!-- CONTENT-WRAPPER SECTION END-->
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
+    <!-- SELECT2 SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
       <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Search and select student...",
+                allowClear: true
+            });
+        });
+    </script>
 
 </body>
 </html>

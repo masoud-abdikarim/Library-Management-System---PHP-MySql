@@ -109,19 +109,16 @@ header('location:manage-books.php');
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Book Name</th>
                                             <th>Book ID</th>
-											<th>Total Copies</th>
-											<th>Issued Copies</th>
+                                            <th>Book Name</th>
+                                            <th>Available Books</th>
                                             <th>Category</th>
-                                            <th>Publication</th>
-                                            <th>ISBN</th>
                                             <th>Price</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php $sql = "SELECT tblbooks.BookName,tblbooks.id,tblbooks.Copies,tblbooks.IssuedCopies,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
+<?php $sql = "SELECT tblbooks.BookName,tblbooks.id,tblbooks.Copies,tblbooks.IssuedCopies,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId left join tblauthors on tblauthors.id=tblbooks.AuthorId";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -132,13 +129,10 @@ foreach($results as $result)
 {               ?>                                      
                                         <tr class="odd gradeX">
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
+                                            <td class="center">BK-<?php echo htmlentities($result->bookid);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->id);?></td>
 											<td class="center"><?php echo htmlentities($result->Copies);?></td>
-											<td class="center"><?php echo htmlentities($result->IssuedCopies);?></td>
                                             <td class="center"><?php echo htmlentities($result->CategoryName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->AuthorName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->ISBNNumber);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookPrice);?></td>
                                             <td class="center">
 

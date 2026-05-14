@@ -2,20 +2,37 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-if(strlen($_SESSION['login'])==0)
+if(strlen($_SESSION['alogin'])==0)
     {   
 header('location:index.php');
 }
 else{ 
-    if(isset($_GET['reqid'])) {
-        $rid = intval($_GET['reqid']);
-        $sql = "UPDATE tblissuedbookdetails SET ReturnStatus=2, ReturnRequestDate=CURRENT_TIMESTAMP WHERE id=:rid AND StudentId=:sid";
+    // Handle Return Approval
+    if(isset($_GET['reid'])) {
+        $rid = intval($_GET['reid']);
+        
+        // Get Book ID first to update stock
+        $sql_get = "SELECT BookId FROM tblissuedbookdetails WHERE id=:rid";
+        $query_get = $dbh->prepare($sql_get);
+        $query_get->bindParam(':rid', $rid, PDO::PARAM_STR);
+        $query_get->execute();
+        $res = $query_get->fetch(PDO::FETCH_OBJ);
+        $bookid = $res->BookId;
+
+        // Update status to Returned (1)
+        $sql = "UPDATE tblissuedbookdetails SET ReturnStatus=1, ReturnDate=CURRENT_TIMESTAMP WHERE id=:rid";
         $query = $dbh->prepare($sql);
         $query->bindParam(':rid', $rid, PDO::PARAM_STR);
-        $query->bindParam(':sid', $_SESSION['stdid'], PDO::PARAM_STR);
         $query->execute();
-        $_SESSION['msg'] = "Return request sent successfully. Please return the book to the library.";
-        header('location:issued-books.php');
+
+        // Increase stock
+        $sql_stock = "UPDATE tblbooks SET IssuedCopies = IssuedCopies - 1 WHERE id=:bookid";
+        $query_stock = $dbh->prepare($sql_stock);
+        $query_stock->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+        $query_stock->execute();
+
+        $_SESSION['msg'] = "Return approved successfully and stock updated.";
+        header('location:pending-returns.php');
     }
     ?>
 <!DOCTYPE html>
@@ -23,7 +40,7 @@ else{
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Online Library Management System | My Borrowed Books</title>
+    <title>Online Library Management System | Pending Returns</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
@@ -35,7 +52,7 @@ else{
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">MY BORROWED BOOKS</h4>
+                <h4 class="header-line">PENDING RETURN APPROVALS</h4>
             </div>
         </div>
 
@@ -46,31 +63,31 @@ else{
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Active Loans</div>
+                        <div class="panel-heading">Requests from Users</div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Student Name</th>
                                             <th>Book ID</th>
                                             <th>Book Name</th>
-                                            <th>Issued Date</th>
-                                            <th>Expected Return</th>
-                                            <th>Status</th>
+                                            <th>Borrow Date</th>
+                                            <th>Request Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 <?php 
-$sid=$_SESSION['stdid'];
-$sql="SELECT tblbooks.BookName,tblbooks.id as bookid,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ExpectedReturnDate,tblissuedbookdetails.ReturnStatus,tblissuedbookdetails.id as rid 
-      FROM tblissuedbookdetails 
-      JOIN tblbooks ON tblbooks.id=tblissuedbookdetails.BookId 
-      WHERE tblissuedbookdetails.StudentId=:sid AND tblissuedbookdetails.ReturnStatus IN (0, 2) 
-      ORDER BY tblissuedbookdetails.id DESC";
+// Status 2: Pending Return Approval
+$sql = "SELECT tblstudents.FullName,tblbooks.BookName,tblbooks.id as bookid,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnRequestDate,tblissuedbookdetails.id as rid 
+        FROM tblissuedbookdetails 
+        JOIN tblstudents ON tblstudents.StudentId=tblissuedbookdetails.StudentId 
+        JOIN tblbooks ON tblbooks.id=tblissuedbookdetails.BookId 
+        WHERE tblissuedbookdetails.ReturnStatus = 2 
+        ORDER BY tblissuedbookdetails.ReturnRequestDate DESC";
 $query = $dbh -> prepare($sql);
-$query-> bindParam(':sid', $sid, PDO::PARAM_STR);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $cnt=1;
@@ -80,28 +97,13 @@ foreach($results as $result)
 {               ?>                                      
                                         <tr class="odd gradeX">
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
+                                            <td class="center"><?php echo htmlentities($result->FullName);?></td>
                                             <td class="center">BK-<?php echo htmlentities($result->bookid);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookName);?></td>
                                             <td class="center"><?php echo htmlentities($result->IssuesDate);?></td>
-                                            <td class="center"><?php echo htmlentities($result->ExpectedReturnDate);?></td>
+                                            <td class="center"><?php echo htmlentities($result->ReturnRequestDate);?></td>
                                             <td class="center">
-                                                <?php if($result->ReturnStatus==0) { 
-                                                    $today = date('Y-m-d');
-                                                    if($result->ExpectedReturnDate < $today) {
-                                                        echo '<span class="label label-danger">Overdue</span>';
-                                                    } else {
-                                                        echo '<span class="label label-primary">Borrowed</span>';
-                                                    }
-                                                } else if($result->ReturnStatus==2) {
-                                                    echo '<span class="label label-warning">Pending Return Approval</span>';
-                                                } ?>
-                                            </td>
-                                            <td class="center">
-                                                <?php if($result->ReturnStatus==0) { ?>
-                                                    <a href="issued-books.php?reqid=<?php echo htmlentities($result->rid);?>" onclick="return confirm('Do you want to request return for this book?');" class="btn btn-warning btn-sm">Request Return</a>
-                                                <?php } else { ?>
-                                                    <button class="btn btn-default btn-sm" disabled>Requested</button>
-                                                <?php } ?>
+                                                <a href="pending-returns.php?reid=<?php echo htmlentities($result->rid);?>" onclick="return confirm('Confirm book return and update stock?');" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve Return</a>
                                             </td>
                                         </tr>
  <?php $cnt=$cnt+1;}} ?>                                      

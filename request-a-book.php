@@ -7,7 +7,6 @@ if(strlen($_SESSION['login'])==0)
 header('location:index.php');
 }
 else{ 
-}
     ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,7 +15,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Online Library Management System | Manage Issued Books</title>
+    <title>Online Library Management System | Request a Book</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME STYLE  -->
@@ -37,7 +36,7 @@ else{
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">Request a Book</h4>
+                <h4 class="header-line">AVAILABLE BOOKS</h4>
     </div>
      <div class="row">
     <?php if($_SESSION['error']!="")
@@ -81,7 +80,7 @@ else{
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          Available Books 
+                          Select a Book to Request
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -89,16 +88,17 @@ else{
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Book ID</th>
                                             <th>Book Name</th>
-											<th>Category</th>
-											<th>Publication Name</th>
-                                            <th>ISBN </th>
+                                            <th>Category</th>
                                             <th>Price</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php $sql = "SELECT tblbooks.BookName,tblbooks.Copies,tblbooks.IssuedCopies,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
+<?php 
+// Using LEFT JOIN for Author so books without publications still show up
+$sql = "SELECT tblbooks.BookName,tblbooks.Copies,tblbooks.IssuedCopies,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId left join tblauthors on tblauthors.id=tblbooks.AuthorId";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -112,13 +112,15 @@ if($result->Copies > $result->IssuedCopies)
                                         <tr class="odd gradeX">
 										    
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
+                                            <td class="center">BK-<?php echo htmlentities($result->bookid);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookName);?></td>
                                             <td class="center"><?php echo htmlentities($result->CategoryName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->AuthorName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->ISBNNumber);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookPrice);?></td>
-											<td class="center"><a href="temp.php?ISBNNumber=<?php echo $result->ISBNNumber;?>&BookName=<?php echo $result->BookName;?>&AuthorName=<?php echo $result->AuthorName;?>&CategoryName=<?php echo $result->CategoryName;?>&BookPrice=<?php echo $result->BookPrice;?>&StudName=<?php echo $_SESSION['username'];?>&StudentID=<?php echo $_SESSION['stdid'];?>
-											"><button class="btn btn-primary" name="submit" id="submit" type="submit"><i class="fa fa-edit "></i> Request</button></td>		
+											<td class="center">
+                                                <a href="temp.php?ISBNNumber=<?php echo $result->ISBNNumber;?>&BookName=<?php echo $result->BookName;?>&AuthorName=<?php echo $result->AuthorName;?>&CategoryName=<?php echo $result->CategoryName;?>&BookPrice=<?php echo $result->BookPrice;?>&StudName=<?php echo $_SESSION['username'];?>&StudentID=<?php echo $_SESSION['stdid'];?>">
+                                                    <button class="btn btn-primary" name="submit" id="submit" type="submit"><i class="fa fa-paper-plane"></i> Request</button>
+                                                </a>
+                                            </td>		
                                         </tr>
 <?php $cnt=$cnt+1;}}} ?>                                      
                                     </tbody>
@@ -133,15 +135,11 @@ if($result->Copies > $result->IssuedCopies)
     </div>
 
      <!-- CONTENT-WRAPPER SECTION END-->
-    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
-    <!-- DATATABLE SCRIPTS  -->
     <script src="assets/js/dataTables/jquery.dataTables.js"></script>
     <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
 </html>
+<?php } ?>

@@ -1,221 +1,362 @@
-﻿
-/*=============================================================
-    Authour URI: www.binarytheme.com
-    License: Commons Attribution 3.0
-
-    http://creativecommons.org/licenses/by/3.0/
-
-    100% Free To use For Personal And Commercial Use.
-    IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
-   
-    ========================================================  */
-
-
 
 /* =============================================================
-   GENERAL STYLES
- ============================================================ */
+   MODERN ADMIN DASHBOARD DESIGN
+   ============================================================ */
 
+/* General Styles */
 body {
-    font-family: 'Open Sans', sans-serif;
-    line-height:28px;
-   
+    font-family: 'Inter', 'Open Sans', sans-serif;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
 }
-.set-radius-zero {
-    border-radius:0px;
-    -moz-border-radius:0px;
-    -webkit-border-radius:0px;
+
+/* Layout Wrapper */
+.main-wrapper {
+    display: flex;
+    min-height: 100vh;
 }
+
+/* Sidebar Styling */
+.sidebar {
+    width: 260px;
+    background-color: #1a202c;
+    color: #cbd5e0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-brand {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid #2d3748;
+}
+
+.sidebar-brand img {
+    max-width: 150px;
+    filter: brightness(0) invert(1); /* Make logo white if it's dark */
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    position: relative;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: #a0aec0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.sidebar-menu a i {
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.sidebar-menu a:hover, .sidebar-menu li.active > a {
+    color: #fff;
+    background-color: #2d3748;
+}
+
+.sidebar-menu a.menu-top-active {
+    background-color: #3b82f6 !important;
+    color: #fff !important;
+}
+
+/* Dropdown in Sidebar */
+.sidebar-menu .dropdown-menu {
+    position: static;
+    float: none;
+    background-color: #111827;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: none; /* Controlled by JS or hover */
+}
+
+.sidebar-menu li.open .dropdown-menu {
+    display: block;
+}
+
+.sidebar-menu .dropdown-menu a {
+    padding-left: 55px;
+    font-size: 13px;
+}
+
+/* Main Content Area */
+.content-area {
+    flex: 1;
+    margin-left: 260px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Top Header */
+.top-header {
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    margin-left: 260px; /* Added margin-left */
+}
+
+.top-header .page-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.top-header .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Content Wrapper Overrides */
 .content-wrapper {
-    margin-top: 40px;
-    min-height:800px;
-    padding-bottom:90px;
+    margin-top: 0 !important;
+    padding: 30px !important;
+    min-height: calc(100vh - 70px);
+    margin-left: 260px; /* Added margin-left */
 }
+
 .header-line {
-    font-weight:900;
-    padding-bottom:25px;
-    border-bottom:1px solid #eeeeee;
-    text-transform:uppercase;
-}
-.pad-botm {
-    padding-bottom:30px;
+    border-bottom: none;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #111827;
 }
 
-
-/* =============================================================
-   NAVBAR & MENU STYLES
- ============================================================ */
-
-.right-div {
-    float: right; 
-    padding: 20px;
-}
-#menu-top a {
-    color:#000;
-    text-decoration:none;
-    font-weight:500;
-    padding: 25px 15px 25px 15px;
-    text-transform:uppercase;
-
-}
-.menu-section {
-    background-color: #f7f7f7;
-    border-bottom:5px solid #9170E4;
-    width:100%
-}
-.menu-top-active {
-    background-color:#eeeeee;
-}
-.navbar-inverse {
-background-color: #FFF;
-border-color: rgba(155, 153, 153, 0.23);
-
+/* Modern Cards */
+.alert.back-widget-set {
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    color: #1f2937 !important;
 }
 
-.navbar {
-    min-height: 90px;
-    margin-bottom: 0px;
-   
-}
-.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    border-color:transparent;
-}
-.navbar-toggle {
-background-color: black;
-border: 1px solid black;
+.alert.back-widget-set:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-    /* =============================================================
-   DASHBOARD STYLES
- ============================================================ */
-
-.img-comments {
-   border: 3px double #e1e1e1;
-height: 60px;
-
+.alert.back-widget-set i {
+    margin-bottom: 15px;
+    opacity: 0.8;
 }
 
-.chat-widget-main {
-    max-height:330px;
-    overflow:auto;
+.alert-success.back-widget-set i { color: #10b981; }
+.alert-info.back-widget-set i { color: #3b82f6; }
+.alert-warning.back-widget-set i { color: #f59e0b; }
+.alert-danger.back-widget-set i { color: #ef4444; }
+
+.back-widget-set h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 10px 0;
 }
 
-.slide-bdr {
-   border:5px solid #9170E4
-}
-.chat-widget-left:after {
-    top: 100%;
-    left: 10%;
-    border: solid transparent;
-    content: " ";
-    position: absolute;
-    border-top-color: #F70E62;
-    border-width: 15px;
-    margin-left: -15px;
+/* Panels */
+.panel {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 
-.chat-widget-left {
-    width: 100%;
+.panel-heading {
+    background-color: #fff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    padding: 20px 25px !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.panel-body {
+    padding: 25px !important;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    padding: 10px 15px;
     height: auto;
+    box-shadow: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-primary { background-color: #3b82f6; }
+.btn-primary:hover { background-color: #2563eb; }
+
+.btn-success { background-color: #10b981; }
+.btn-success:hover { background-color: #059669; }
+
+.btn-danger { background-color: #ef4444; }
+.btn-danger:hover { background-color: #dc2626; }
+
+.btn-info { background-color: #0ea5e9; }
+.btn-info:hover { background-color: #0284c7; }
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+    color: #4b5563;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
     padding: 15px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    position: relative;
-    border: 1px solid #F70E62;
-    font-size:12px;
-}
-.chat-widget-right:after {
-    top: 100%;
-    right: 10%;
-    border: solid transparent;
-    content: " ";
-    position: absolute;
-    border-top-color: #5AA8CC;
-    border-width: 15px;
-    margin-left: -15px;
 }
 
-.chat-widget-right {
-    width: 100%;
-    height: auto;
+.table tbody td {
     padding: 15px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    position: relative;
-    border: 1px solid #5AA8CC;
-    font-size:12px;
+    vertical-align: middle;
+    border-top: 1px solid #f3f4f6;
+    color: #374151;
 }
 
-.chat-widget-name-left {
-   color: #808080;
-    margin-top: 30px;
-    margin-left: 60px;
-    text-align:left;
+.table-hover tbody tr:hover {
+    background-color: #f9fafb;
 }
 
-    .img-left-chat {
-        border:3px double #e1e1e1;
-        float:left;
-        margin-right:30px;
+/* DataTables Overrides */
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    padding: 6px 12px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    padding: 4px 8px;
+}
+
+/* Responsive Sidebar Toggler (Hidden for now, can be added later) */
+.mobile-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease;
     }
-     .img-right-chat {
-        border:3px double #e1e1e1;
-        float:right;
-        margin-left:30px;
-    }
-     .chat-widget-main img-right {
-        border:3px double #e1e1e1;
-        float:left;
-    }
-.chat-widget-name-left h4 {
-    font-weight:normal;
-    font-size:11px;
     
-}
-.chat-widget-name-left h5 {
-    font-weight:normal;
-    font-size:10px;
-}
-.chat-widget-name-right h4 {
-    font-weight:normal;
-    font-size:11px;
-}
-.chat-widget-name-right h5 {
-    font-weight:normal;
-    font-size:10px;
-}
-.chat-widget-name-right {
-    color: #808080;
-    margin-top: 40px;
-    margin-right: 60px;
-    text-align:right;
-}
-
-.recent-users-sec img {
-    max-height:80px;
-    margin:15px;
-}
-
-.back-widget-set {
-    background-color:transparent;
-}
-
-/* =============================================================
-   FOOTER SECTION STYLES
- ============================================================ */
-.footer-section {
-    padding:25px 50px 25px 50px;
-    color:#000;
-    font-size:13px;
-      background-color: #f7f7f7;
-      text-align:right;
-       border-top:5px solid #9170E4;
-
-}
-
-    .footer-section a, .footer-section a:hover {
-        color:#000;
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .top-header {
+        margin-left: 0 !important;
+        padding: 0 15px;
+    }
+    
+    .content-wrapper {
+        margin-left: 0 !important;
+        padding: 15px !important;
+    }
+    
+    .mobile-toggle {
+        display: block;
+        margin-right: 15px;
+        color: #1a202c;
+    }
+    
+    .sidebar-brand {
+        padding: 20px 15px;
     }
 
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 998;
+    }
+    
+    .sidebar.active + .sidebar-overlay {
+        display: block;
+    }
+}
+
+@media (max-width: 767px) {
+    .top-header .page-title {
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
+    }
+    
+    .header-line {
+        font-size: 20px;
+    }
+}
