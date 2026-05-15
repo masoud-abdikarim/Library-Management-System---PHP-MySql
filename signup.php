@@ -46,7 +46,7 @@ else
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Library Management System - Create your account" />
+    <meta name="description" content="NEW HARGEISA LIBRARY - Create your account" />
     <title>Library ERP | Create Account</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/font-awesome.css" rel="stylesheet" />

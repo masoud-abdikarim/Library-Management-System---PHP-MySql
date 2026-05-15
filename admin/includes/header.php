@@ -2,7 +2,7 @@
 <?php if($_SESSION['alogin'] != '') { ?>
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h3 style="color: #fff; margin: 0; font-size: 20px;">LIBRARY <span style="color: #3b82f6;">ERP</span></h3>
+        <h3 style="color: #fff; margin: 0; font-size: 20px;">NEW HARGEISA <span style="color: #3b82f6;">LIBRARY</span></h3>
     </div>
     <div class="sidebar-menu">
         <ul>
@@ -48,7 +48,7 @@
         <i class="fa fa-bars"></i>
     </div>
     <div class="page-title">
-        Online Library Management System
+        NEW HARGEISA LIBRARY
     </div>
     <div class="user-actions">
         <span class="hidden-xs" style="font-weight: 500;">Admin Dashboard</span>

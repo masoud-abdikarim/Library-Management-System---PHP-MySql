@@ -1,7 +1,7 @@
 <?php if($_SESSION['login'] != '') { ?>
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h3 style="color: #fff; margin: 0; font-size: 20px;">LIBRARY <span style="color: #3b82f6;">USER</span></h3>
+        <h3 style="color: #fff; margin: 0; font-size: 20px;">NEW HARGEISA <span style="color: #3b82f6;">LIBRARY</span></h3>
     </div>
     <div class="sidebar-menu">
         <ul>
@@ -29,7 +29,7 @@
         <i class="fa fa-bars"></i>
     </div>
     <div class="page-title" style="font-weight: 600; font-size: 18px; color: #1a202c;">
-        Online Library Management System
+        NEW HARGEISA LIBRARY
     </div>
     <div class="user-actions">
         <span class="hidden-xs" style="font-weight: 500; margin-right: 15px;">Welcome Back!</span>
@@ -85,7 +85,7 @@
         <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 70px;">
             <div class="navbar-header">
                 <a href="index.php" style="text-decoration: none;">
-                    <h3 style="color: #1a202c; margin: 0; font-weight: 700;">LIBRARY <span style="color: #3b82f6;">ERP</span></h3>
+                    <h3 style="color: #1a202c; margin: 0; font-weight: 700;">NEW HARGEISA <span style="color: #3b82f6;">LIBRARY</span></h3>
                 </a>
             </div>
             <div class="nav-links">

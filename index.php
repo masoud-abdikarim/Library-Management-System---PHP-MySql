@@ -65,8 +65,8 @@ if(isset($_POST['login']))
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Library Management System - Sign in to access your account" />
-    <title>Library ERP | Sign In</title>
+    <meta name="description" content="NEW HARGEISA LIBRARY - Sign in to access your account" />
+    <title>NEW HARGEISA LIBRARY | Sign In</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' rel='stylesheet' />
@@ -360,7 +360,7 @@ if(isset($_POST['login']))
         <!-- Left: Library Image Panel -->
         <div class="login-image-panel">
             <div class="image-content">
-                <div class="brand">LIBRARY ERP</div>
+                <div class="brand">NEW HARGEISA LIBRARY</div>
                 <h1>Discover a World of Knowledge</h1>
                 <p>Access thousands of books, manage your borrowing, and explore an ever-growing collection — all from one powerful platform.</p>
                 <div class="image-stats">
@@ -402,7 +402,7 @@ if(isset($_POST['login']))
         <div class="login-form-panel">
             <div class="form-container">
                 <div class="form-logo">
-                    <h2>LIBRARY <span>ERP</span></h2>
+                    <h2>NEW HARGEISA <span>LIBRARY</span></h2>
                 </div>
 
                 <div class="form-header">
