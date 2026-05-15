@@ -157,6 +157,13 @@ body {
     color: #111827;
 }
 
+/* Fix container width to prevent horizontal overflow */
+.content-wrapper .container {
+    width: 100% !important;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 /* Modern Cards */
 .alert.back-widget-set {
     background: #fff;
@@ -360,3 +367,95 @@ label {
         font-size: 20px;
     }
 }
+
+/* =============================================================
+   ENHANCED RESPONSIVE STYLES (Mobile, Tablet, Desktop)
+   ============================================================ */
+
+/* Modals Responsiveness */
+.modal-dialog {
+    max-width: 95%;
+}
+@media (max-width: 767px) {
+    .modal-dialog {
+        width: 95%;
+        margin: 10px auto;
+    }
+    .modal-content {
+        overflow: hidden;
+    }
+    .modal-body {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+/* Tables Responsiveness */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: none;
+}
+@media (max-width: 767px) {
+    .table > thead > tr > th, 
+    .table > tbody > tr > td {
+        white-space: nowrap; /* Prevent awkward text wrapping */
+        padding: 10px !important;
+    }
+    .btn-sm {
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+}
+
+/* Forms Responsiveness */
+@media (max-width: 767px) {
+    .form-control {
+        width: 100%;
+    }
+    .panel-body form button[type="submit"] {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* Card Responsiveness */
+@media (max-width: 767px) {
+    .back-widget-set {
+        margin-bottom: 15px;
+        padding: 15px !important;
+    }
+    .back-widget-set i {
+        font-size: 2.5em; /* slightly smaller icons on mobile */
+    }
+    .back-widget-set h3 {
+        font-size: 24px;
+    }
+}
+
+/* General Spacing & Typography */
+@media (max-width: 767px) {
+    .content-wrapper {
+        padding: 15px 10px !important;
+    }
+    .panel-heading {
+        padding: 15px !important;
+    }
+    .panel-body {
+        padding: 15px !important;
+    }
+    .header-line {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+}
+
+/* Sidebar fixes for very small devices */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 240px;
+        left: -240px;
+    }
+}
+

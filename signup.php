@@ -15,7 +15,7 @@ $hits[0] ++;
 $fp = fopen($count_my_page , "w");
  fputs($fp , "$hits[0]");
  fclose($fp); 
-$StudentId= $hits[0];   
+$StudentId= "SID" . str_pad($hits[0], 3, "0", STR_PAD_LEFT);   
 $fname=$_POST['fullanme'];
 $mobileno=$_POST['mobileno'];
 $email=$_POST['email']; 

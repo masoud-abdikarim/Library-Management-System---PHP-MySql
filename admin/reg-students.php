@@ -84,8 +84,8 @@ header('location:reg-students.php');
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Student ID</th>
-                                            <th>Student Name</th>
+                                            <th>User ID</th>
+                                            <th>User Name</th>
                                             <th>Email id </th>
                                             <th>Mobile Number</th>
                                             <th>Reg Date</th>
@@ -109,7 +109,7 @@ foreach($results as $result)
                                             <td class="center"><?php echo htmlentities($result->FullName);?></td>
                                             <td class="center"><?php echo htmlentities($result->EmailId);?></td>
                                             <td class="center"><?php echo htmlentities($result->MobileNumber);?></td>
-                                             <td class="center"><?php echo htmlentities($result->RegDate);?></td>
+                                             <td class="center"><?php echo htmlentities(date('d/m/Y', strtotime($result->RegDate)));?></td>
                                             <td class="center"><?php if($result->Status==1)
                                             {
                                                 echo htmlentities("Active");
