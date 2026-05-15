@@ -98,7 +98,7 @@ foreach($results as $result)
                                             </td>
                                             <td class="center">
                                                 <?php if($result->ReturnStatus==0) { ?>
-                                                    <a href="issued-books.php?reqid=<?php echo htmlentities($result->rid);?>" onclick="return confirm('Do you want to request return for this book?');" class="btn btn-warning btn-sm">Request Return</a>
+                                                    <a href="javascript:void(0);" data-href="issued-books.php?reqid=<?php echo htmlentities($result->rid);?>" data-action="confirm" data-title="Request Return" data-msg="Do you want to request return for this book?" class="btn btn-warning btn-sm">Request Return</a>
                                                 <?php } else { ?>
                                                     <button class="btn btn-default btn-sm" disabled>Requested</button>
                                                 <?php } ?>

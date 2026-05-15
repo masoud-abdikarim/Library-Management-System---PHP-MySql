@@ -79,6 +79,90 @@
         });
     });
 </script>
+
+<!-- Global Confirmation Modal -->
+<div class="modal fade" id="globalConfirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document" style="margin-top: 15vh;">
+    <div class="modal-content" style="border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+      <div class="modal-body text-center" style="padding: 30px 20px;">
+        <div class="modal-icon" style="font-size: 40px; color: #ef4444; margin-bottom: 15px;">
+            <i class="fa fa-exclamation-triangle"></i>
+        </div>
+        <h4 id="confirmModalLabel" style="font-weight: 600; color: #1a202c; margin-top: 0;">Delete Item</h4>
+        <p id="confirmModalMsg" style="color: #4b5563; font-size: 14px; margin-bottom: 25px;">Are you sure you want to delete this item? This action cannot be undone.</p>
+        <div style="display: flex; justify-content: center; gap: 10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal" style="min-width: 90px; border-radius: 4px; font-weight: 500;">Cancel</button>
+            <a href="#" id="globalConfirmBtn" class="btn btn-danger" style="min-width: 90px; border-radius: 4px; font-weight: 500; background-color: #ef4444; border-color: #ef4444;">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Override default alert
+    window.originalAlert = window.alert;
+    window.alert = function(msg) {
+        var modal = $('#globalConfirmModal');
+        modal.find('#confirmModalLabel').text('Alert');
+        modal.find('#confirmModalMsg').text(msg);
+        modal.find('.modal-icon').html('<i class="fa fa-info-circle"></i>').css('color', '#3b82f6');
+        modal.find('#globalConfirmBtn').hide();
+        modal.find('.btn-default').text('OK').removeClass('btn-default').addClass('btn-primary');
+        modal.modal('show');
+    };
+
+    // Handle data-action="confirm" clicks
+    document.querySelectorAll('[data-action="confirm"]').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            var href = this.getAttribute('data-href');
+            var title = this.getAttribute('data-title') || 'Delete Item';
+            var msg = this.getAttribute('data-msg') || 'Are you sure you want to delete this item? This action cannot be undone.';
+            
+            var modal = $('#globalConfirmModal');
+            modal.find('#confirmModalLabel').text(title);
+            modal.find('#confirmModalMsg').text(msg);
+            
+            var btn = modal.find('#globalConfirmBtn');
+            btn.show().attr('href', href).text('Confirm');
+            
+            // reset cancel button
+            modal.find('button[data-dismiss="modal"]').text('Cancel').removeClass('btn-primary').addClass('btn-default');
+            
+            var iconClass = 'fa-exclamation-triangle';
+            var color = '#ef4444';
+            var btnClass = 'btn-danger';
+            
+            if (title.toLowerCase().includes('delete') || title.toLowerCase().includes('block')) {
+                btn.text(title.toLowerCase().includes('delete') ? 'Delete' : 'Block');
+            } else if (title.toLowerCase().includes('approve') || title.toLowerCase().includes('activate')) {
+                iconClass = 'fa-check-circle';
+                color = '#10b981';
+                btnClass = 'btn-success';
+                btn.text(title.toLowerCase().includes('approve') ? 'Approve' : 'Activate');
+            } else if (title.toLowerCase().includes('request')) {
+                iconClass = 'fa-question-circle';
+                color = '#f59e0b';
+                btnClass = 'btn-warning';
+                btn.text('Request');
+            }
+            
+            modal.find('.modal-icon').html('<i class="fa ' + iconClass + '"></i>').css('color', color);
+            btn.removeClass('btn-danger btn-success btn-warning btn-primary').addClass('btn ' + btnClass);
+            
+            if (btnClass === 'btn-danger') {
+                btn.css({'background-color': '#ef4444', 'border-color': '#ef4444'});
+            } else {
+                btn.css({'background-color': '', 'border-color': ''});
+            }
+            
+            modal.modal('show');
+        });
+    });
+});
+</script>
 <?php } else { ?>
     <!-- Header for non-logged in users (Login/Signup) -->
     <div class="navbar navbar-inverse set-radius-zero" style="min-height: 70px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">

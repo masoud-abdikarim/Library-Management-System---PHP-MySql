@@ -133,7 +133,7 @@ foreach($results as $result)
                                             <td class="center">
 
                                             <a href="edit-publication.php?athrid=<?php echo htmlentities($result->id);?>"><button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> 
-                                          <a href="manage-publications.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class="btn btn-danger"><i class="fa fa-pencil"></i> Delete</button>
+                                          <a href="javascript:void(0);" data-href="manage-publications.php?del=<?php echo htmlentities($result->id);?>" data-action="confirm" data-title="Delete Publication" data-msg="Are you sure you want to delete this publication? This action cannot be undone." class="btn btn-danger"><i class="fa fa-pencil"></i> Delete</a>
                                             </td>
                                         </tr>
  <?php $cnt=$cnt+1;}} ?>                                      

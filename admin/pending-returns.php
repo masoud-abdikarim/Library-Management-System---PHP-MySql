@@ -103,7 +103,7 @@ foreach($results as $result)
                                             <td class="center"><?php echo htmlentities($result->IssuesDate);?></td>
                                             <td class="center"><?php echo htmlentities($result->ReturnRequestDate);?></td>
                                             <td class="center">
-                                                <a href="pending-returns.php?reid=<?php echo htmlentities($result->rid);?>" onclick="return confirm('Confirm book return and update stock?');" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve Return</a>
+                                                <a href="javascript:void(0);" data-href="pending-returns.php?reid=<?php echo htmlentities($result->rid);?>" data-action="confirm" data-title="Approve Return" data-msg="Confirm book return and update stock?" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve Return</a>
                                             </td>
                                         </tr>
  <?php $cnt=$cnt+1;}} ?>                                      

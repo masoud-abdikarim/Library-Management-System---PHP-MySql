@@ -122,10 +122,10 @@ foreach($results as $result)
                                             <td class="center">
 <?php if($result->Status==1)
  {?>
-<a href="reg-students.php?inid=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to block this student?');"" >  <button class="btn btn-danger"> Inactive</button>
+<a href="javascript:void(0);" data-href="reg-students.php?inid=<?php echo htmlentities($result->id);?>" data-action="confirm" data-title="Block Student" data-msg="Are you sure you want to block this student?" class="btn btn-danger"> Inactive</a>
 <?php } else {?>
 
-                                            <a href="reg-students.php?id=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to active this student?');""><button class="btn btn-primary"> Active</button> 
+                                            <a href="javascript:void(0);" data-href="reg-students.php?id=<?php echo htmlentities($result->id);?>" data-action="confirm" data-title="Activate Student" data-msg="Are you sure you want to activate this student?" class="btn btn-primary"> Active</a>  
                                             <?php } ?>
                                           
                                             </td>
