@@ -24,22 +24,11 @@ header('location:manage-categories.php');
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>NEW HARGEISA LIBRARY | Manage Categories</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- DATATABLE STYLE  -->
-    <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-    <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <!-- GOOGLE FONT -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-
+<?php
+$page_title = 'NEW HARGEISA LIBRARY | Manage Categories';
+$use_datatables = true;
+?>
+<?php include('includes/head.php'); ?>
 </head>
 <body>
       <!------MENU SECTION START-->
@@ -115,7 +104,6 @@ header('location:manage-categories.php');
                                             <th>Category</th>
                                             <th>Status</th>
                                             <th>Creation Date</th>
-                                            <th>Updation Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -137,8 +125,7 @@ foreach($results as $result)
                                             <?php } else {?>
                                             <a href="#" class="btn btn-danger btn-xs">Inactive</a>
                                             <?php } ?></td>
-                                            <td class="center"><?php echo htmlentities($result->CreationDate);?></td>
-                                            <td class="center"><?php echo htmlentities($result->UpdationDate);?></td>
+                                            <td class="center"><?php echo htmlentities(date('Y-m-d', strtotime($result->CreationDate)));?></td>
                                             <td class="center">
 
                                             <a href="edit-category.php?catid=<?php echo htmlentities($result->id);?>"><button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> 
@@ -165,12 +152,8 @@ foreach($results as $result)
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
-    <!-- DATATABLE SCRIPTS  -->
-    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
+    <!-- BOOTSTRAP SCRIPTS  -->    <!-- DATATABLE SCRIPTS  -->
+    <script src="assets/js/dataTables/jquery.dataTables.js"></script>      <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
 </html>

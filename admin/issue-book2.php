@@ -41,75 +41,10 @@ header('location:manage-issued-books.php');
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>NEW HARGEISA LIBRARY | Issue a new Book</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <!-- GOOGLE FONT -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <!-- SELECT2 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <style>
-        .select2-container .select2-selection--single {
-            height: 40px !important;
-            padding: 5px 15px !important;
-            border: 1px solid #d1d5db !important;
-            border-radius: 8px !important;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 38px !important;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: 28px !important;
-        }
-    </style>
-<script>
-// function for get student name
-function getstudent() {
-$("#loaderIcon").show();
-jQuery.ajax({
-url: "get_student.php",
-data:'studentid='+$("#studentid").val(),
-type: "POST",
-success:function(data){
-$("#get_student_name").html(data);
-$("#loaderIcon").hide();
-},
-error:function (){}
-});
-}
-
-//function for book details
-function getbook() {
-$("#loaderIcon").show();
-jQuery.ajax({
-url: "get_book.php",
-data:'bookid='+$("#bookid").val(),
-type: "POST",
-success:function(data){
-$("#get_book_name").html(data);
-$("#loaderIcon").hide();
-},
-error:function (){}
-});
-}
-
-</script> 
-<style type="text/css">
-  .others{
-    color:red;
-}
-
-</style>
-
-
+<?php
+$page_title = 'NEW HARGEISA LIBRARY | Issue a new Book';
+?>
+<?php include('includes/head.php'); ?>
 </head>
 <body>
       <!------MENU SECTION START-->
@@ -193,9 +128,7 @@ else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlen
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
-    <!-- SELECT2 SCRIPTS -->
+    <!-- BOOTSTRAP SCRIPTS  -->    <!-- SELECT2 SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
       <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>

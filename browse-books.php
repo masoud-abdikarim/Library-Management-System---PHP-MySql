@@ -21,154 +21,12 @@ if (strlen($_SESSION['login']) == 0) {
     <html xmlns="http://www.w3.org/1999/xhtml">
 
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>NEW HARGEISA LIBRARY | Browse Books</title>
-        <!-- BOOTSTRAP CORE STYLE  -->
-        <link href="assets/css/bootstrap.css" rel="stylesheet" />
-        <!-- FONT AWESOME STYLE  -->
-        <link href="assets/css/font-awesome.css" rel="stylesheet" />
-        <!-- CUSTOM STYLE  -->
-        <link href="assets/css/style.css" rel="stylesheet" />
-        <style>
-            .book-card {
-                background: #fff;
-                border-radius: 15px;
-                padding: 0;
-                margin-bottom: 30px;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                transition: all 0.3s ease;
-                overflow: hidden;
-                border: 1px solid #e5e7eb;
-                height: 100%;
-            }
-
-            .book-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            }
-
-            .book-cover {
-                height: 160px;
-                background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #fff;
-            }
-
-            .book-info {
-                padding: 20px;
-            }
-
-            .book-title {
-                font-size: 16px;
-                font-weight: 700;
-                color: #111827;
-                margin: 0 0 10px 0;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .book-meta {
-                font-size: 13px;
-                color: #6b7280;
-                margin-bottom: 5px;
-            }
-
-            .book-status {
-                display: inline-block;
-                padding: 4px 10px;
-                border-radius: 20px;
-                font-size: 11px;
-                font-weight: 600;
-                margin-top: 10px;
-            }
-
-            .status-available {
-                background-color: #d1fae5;
-                color: #065f46;
-            }
-
-            .status-lowstock {
-                background-color: #fef3c7;
-                color: #92400e;
-            }
-
-            .status-unavailable {
-                background-color: #fee2e2;
-                color: #991b1b;
-            }
-
-            .search-container {
-                position: relative;
-            }
-
-            .search-container i {
-                position: absolute;
-                left: 15px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: #9ca3af;
-            }
-
-            .search-container input {
-                padding-left: 45px !important;
-                border-radius: 12px !important;
-                height: 50px !important;
-                font-size: 15px !important;
-            }
-
-            .category-select {
-                border-radius: 12px !important;
-                height: 50px !important;
-                appearance: none;
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-                background-repeat: no-repeat;
-                background-position: right 15px center;
-                background-size: 15px;
-                padding-right: 40px !important;
-            }
-
-            .filter-section {
-                background: #fff;
-                padding: 30px;
-                border-radius: 20px;
-                margin-bottom: 40px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-                border: 1px solid #f3f4f6;
-            }
-
-            #no-results {
-                display: none;
-                padding: 60px 0;
-                text-align: center;
-            }
-
-            .btn-reset {
-                background-color: #f3f4f6;
-                color: #4b5563;
-                border: none;
-                padding: 12px;
-                border-radius: 12px;
-                font-weight: 600;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                width: 100%;
-            }
-
-            .btn-reset:hover {
-                background-color: #e5e7eb;
-                color: #1f2937;
-            }
-        </style>
-    </head>
+<?php
+$page_title = 'NEW HARGEISA LIBRARY | Browse Books';
+?>
+<?php include('includes/head.php'); ?>
+    <link href="assets/css/catalog.css" rel="stylesheet" />
+</head>
 
     <body>
         <?php include('includes/header.php'); ?>
@@ -265,10 +123,8 @@ if (strlen($_SESSION['login']) == 0) {
         </div>
 
         <script src="assets/js/jquery-1.10.2.js"></script>
-        <script src="assets/js/bootstrap.js"></script>
-        <script src="assets/js/custom.js"></script>
-
-        <script>
+    <script src="assets/js/custom.js"></script>
+    <script>
             $(document).ready(function() {
                 const $searchInput = $('#bookSearch');
                 const $categoryFilter = $('#categoryFilter');

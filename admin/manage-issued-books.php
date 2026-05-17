@@ -11,14 +11,11 @@ else{
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>NEW HARGEISA LIBRARY | Borrowed Books</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
+<?php
+$page_title = 'NEW HARGEISA LIBRARY | Borrowed Books';
+$use_datatables = true;
+?>
+<?php include('includes/head.php'); ?>
 </head>
 <body>
 <?php include('includes/header.php');?>
@@ -105,9 +102,7 @@ foreach($results as $result)
     </div>
     </div>
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
     <script src="assets/js/custom.js"></script>
 </body>
 </html>

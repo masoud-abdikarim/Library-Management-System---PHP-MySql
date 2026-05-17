@@ -36,117 +36,10 @@ $error="Your current password is wrong";
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>NEW HARGEISA LIBRARY | </title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <!-- GOOGLE FONT -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-  <style>
-    .password-wrapper {
-        display: flex;
-        justify-content: center;
-        padding: 40px 0;
-    }
-    .password-card {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        padding: 40px;
-        width: 100%;
-        max-width: 480px;
-        border: 1px solid #edf2f7;
-    }
-    .password-card h3 {
-        margin: 0 0 10px;
-        font-weight: 700;
-        color: #1a202c;
-        font-size: 24px;
-        text-align: center;
-    }
-    .password-card p {
-        color: #718096;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .form-group {
-        margin-bottom: 20px;
-    }
-    .form-group label {
-        font-weight: 600;
-        color: #4a5568;
-        display: block;
-        margin-bottom: 8px;
-    }
-    .form-control {
-        height: 48px;
-        border-radius: 10px;
-        border: 1px solid #e2e8f0;
-        padding: 10px 15px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-    }
-    .form-control:focus {
-        border-color: #3182ce;
-        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
-        outline: none;
-    }
-    .btn-submit {
-        background: #3182ce;
-        color: #fff;
-        font-weight: 700;
-        padding: 12px;
-        border-radius: 10px;
-        border: none;
-        width: 100%;
-        margin-top: 10px;
-        transition: all 0.3s ease;
-        font-size: 16px;
-    }
-    .btn-submit:hover {
-        background: #2b6cb0;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2);
-    }
-    .errorWrap {
-        padding: 15px;
-        margin-bottom: 25px;
-        background: #fff5f5;
-        border-left: 5px solid #f56565;
-        color: #c53030;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .succWrap {
-        padding: 15px;
-        margin-bottom: 25px;
-        background: #f0fff4;
-        border-left: 5px solid #48bb78;
-        color: #2f855a;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .input-group-text {
-        background: none;
-        border-right: none;
-    }
-    .has-error .form-control {
-        border-color: #f56565;
-    }
-    .error-text {
-        color: #f56565;
-        font-size: 13px;
-        margin-top: 5px;
-        display: none;
-    }
-    </style>
+<?php
+$page_title = 'NEW HARGEISA LIBRARY |';
+?>
+<?php include('includes/head.php'); ?>
 </head>
 <script type="text/javascript">
 function valid() {
@@ -221,9 +114,7 @@ function valid() {
     </div>
      <!-- CONTENT-WRAPPER SECTION END-->
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
+    <!-- BOOTSTRAP SCRIPTS  -->      <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
 </html>

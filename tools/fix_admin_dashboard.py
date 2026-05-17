@@ -1,27 +1,27 @@
-<?php
-session_start();
-error_reporting(0);
-include('includes/config.php');
-if(strlen($_SESSION['alogin'])==0)
-  { 
-header('location:index.php');
-}
-else{
-$page_title = 'NEW HARGEISA LIBRARY | Admin Dashboard';
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<?php include('includes/head.php'); ?>
-</head>
-<body>
-<?php include('includes/header.php');?>
-    <main class="content-wrapper">
+import re
+
+p = r'c:\xampp\htdocs\Library-Management-System\admin\dashboard.php'
+with open(p, encoding='utf-8') as f:
+    t = f.read()
+
+start = t.find('<motion class="content-wrapper">')
+if start == -1:
+    start = t.find('<motion class="content-wrapper">')
+if start == -1:
+    start = t.find('<div class="content-wrapper">')
+end = t.find('<div class="row">', t.find('Overdue Books'))
+
+# find carousel row
+carousel_start = t.find('             <div class="row">', t.find('Overdue Books'))
+if carousel_start == -1:
+    carousel_start = t.find('<motion class="row">', t.find('Overdue Books'))
+
+new_main = '''    <main class="content-wrapper">
         <div class="container">
             <h1 class="page-header">Admin Dashboard</h1>
 
             <div class="stat-grid">
-                <div class="stat-card stat-card--success">
+                <motion class="stat-card stat-card--success">
                     <i class="fa fa-book"></i>
 <?php 
 $sql ="SELECT id from tblbooks ";
@@ -64,7 +64,7 @@ $borrowed=$query_b->rowCount();
 ?>
                     <h3><?php echo htmlentities($borrowed);?></h3>
                     <p>Currently Borrowed</p>
-                </div>
+                </motion>
                 <div class="stat-card stat-card--warning">
                     <i class="fa fa-clock-o"></i>
 <?php 
@@ -102,38 +102,21 @@ $overdue=$query_o->rowCount();
                 </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-10 col-sm-8 col-xs-12 col-md-offset-1">
-                    <div id="carousel-example" class="carousel slide slide-bdr">
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="assets/img/1.jpg" alt="Library" />
-                        </div>
-                        <div class="item">
-                            <img src="assets/img/2.jpg" alt="Library" />
-                        </div>
-                        <div class="item">
-                            <img src="assets/img/3.jpg" alt="Library" />
-                        </div>
-                    </div>
-                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example" data-slide-to="1"></li>
-                        <li data-target="#carousel-example" data-slide-to="2"></li>
-                    </ol>
-                     <a class="left carousel-control" href="#carousel-example" data-slide="prev" aria-label="Previous">
-                        <i class="fa fa-chevron-left"></i>
-                     </a>
-                     <a class="right carousel-control" href="#carousel-example" data-slide="next" aria-label="Next">
-                        <i class="fa fa-chevron-right"></i>
-                     </a>
-                </div>
-              </div>
-             </div>
-        </div>
-    </main>
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <script src="assets/js/custom.js"></script>
-</body>
-</html>
-<?php } ?>
+'''
+
+wrong = chr(109)+chr(111)+chr(116)+chr(105)+chr(111)+chr(110)
+right = chr(100)+chr(105)+chr(118)
+new_main = new_main.replace(wrong, right)
+
+# Replace from content-wrapper to carousel row
+pattern = r'<div class="content-wrapper">.*?(?=\s*<div class="row">\s*\n\s*<motion class="col-md-10)'
+pattern2 = r'<div class="content-wrapper">.*?(?=\s*<div class="row">\s*\n\s*<div class="col-md-10)'
+m = re.search(pattern2, t, re.DOTALL)
+if m:
+    t = t[:m.start()] + new_main + t[m.end():]
+    t = t.replace('    </div>\n    </motion>', '        </div>\n    </main>', 1)
+    with open(p, 'w', encoding='utf-8') as f:
+        f.write(t)
+    print('updated')
+else:
+    print('pattern not found')

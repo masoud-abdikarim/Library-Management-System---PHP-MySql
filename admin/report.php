@@ -114,20 +114,10 @@ $categoryData = $categoryStmt->fetchAll(PDO::FETCH_KEY_PAIR);
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Library Reports Dashboard</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .stat-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,0.1);margin-bottom:20px;text-align:center;}
-        .stat-card h3{margin:0;font-size:24px;color:inherit;}
-        .stat-card p{margin:5px 0 0;color:inherit;opacity:0.9;}
-        .stat-card i{margin-bottom:10px;}
-        @media(max-width:768px){.stat-card{margin-bottom:15px;}}
-    </style>
+<?php
+$page_title = 'Library Reports Dashboard';
+?>
+<?php include('includes/head.php'); ?>
 </head>
 <body>
 <?php include('includes/header.php'); ?>
@@ -307,9 +297,7 @@ function toggleCustomDates(){
     }
 }
 </script>
-<script src="assets/js/jquery-1.10.2.js"></script>
-<script src="assets/js/bootstrap.js"></script>
-<script src="assets/js/custom.js"></script>
+    <script src="assets/js/jquery-1.10.2.js"></script><script src="assets/js/custom.js"></script>
 </body>
 </html>
 

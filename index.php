@@ -64,298 +64,14 @@ if(isset($_POST['login']))
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="NEW HARGEISA LIBRARY - Sign in to access your account" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NEW HARGEISA LIBRARY | Sign In</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' rel='stylesheet' />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            background-color: #0f172a;
-        }
-
-        .login-wrapper {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Left Panel - Image */
-        .login-image-panel {
-            flex: 1;
-            position: relative;
-            background: url('assets/img/library-hero.png') center/cover no-repeat;
-            display: flex;
-            align-items: flex-end;
-            padding: 60px;
-        }
-
-        .login-image-panel::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.85) 100%);
-        }
-
-        .image-content {
-            position: relative;
-            z-index: 2;
-            color: #fff;
-            max-width: 500px;
-        }
-
-        .image-content .brand {
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #93c5fd;
-            margin-bottom: 20px;
-        }
-
-        .image-content h1 {
-            font-size: 42px;
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .image-content p {
-            font-size: 17px;
-            color: #cbd5e1;
-            line-height: 1.7;
-            max-width: 420px;
-        }
-
-        .image-stats {
-            display: flex;
-            gap: 40px;
-            margin-top: 35px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.15);
-        }
-
-        .image-stats .stat h3 {
-            font-size: 28px;
-            font-weight: 800;
-            color: #fff;
-            margin: 0;
-        }
-
-        .image-stats .stat span {
-            font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
-        /* Right Panel - Form */
-        .login-form-panel {
-            width: 520px;
-            min-width: 520px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 60px;
-            background-color: #fff;
-        }
-
-        .form-container {
-            width: 100%;
-            max-width: 380px;
-        }
-
-        .form-logo {
-            margin-bottom: 40px;
-        }
-
-        .form-logo h2 {
-            font-size: 26px;
-            font-weight: 800;
-            color: #0f172a;
-            margin: 0;
-        }
-
-        .form-logo h2 span {
-            color: #3b82f6;
-        }
-
-        .form-header {
-            margin-bottom: 35px;
-        }
-
-        .form-header h3 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0f172a;
-            margin: 0 0 8px 0;
-        }
-
-        .form-header p {
-            font-size: 15px;
-            color: #64748b;
-            margin: 0;
-        }
-
-        .form-field {
-            margin-bottom: 22px;
-        }
-
-        .form-field label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 8px;
-            letter-spacing: 0.02em;
-        }
-
-        .form-field .input-wrap {
-            position: relative;
-        }
-
-        .form-field .input-wrap i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 16px;
-        }
-
-        .form-field input {
-            width: 100%;
-            padding: 14px 16px 14px 48px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            color: #0f172a;
-            transition: all 0.2s;
-            background: #f8fafc;
-        }
-
-        .form-field input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(59,130,246,0.1);
-        }
-
-        .form-field input::placeholder {
-            color: #94a3b8;
-        }
-
-        .form-extras {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 28px;
-        }
-
-        .form-extras label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #475569;
-            cursor: pointer;
-        }
-
-        .form-extras a {
-            font-size: 14px;
-            color: #3b82f6;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .form-extras a:hover {
-            color: #2563eb;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 0.02em;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59,130,246,0.35);
-        }
-
-        .btn-login:active {
-            transform: translateY(0);
-        }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .form-footer span {
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        .form-footer a {
-            color: #0f172a;
-            font-weight: 700;
-            text-decoration: none;
-            margin-left: 4px;
-        }
-
-        .form-footer a:hover {
-            color: #3b82f6;
-        }
-
-        .alert-error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .login-image-panel { display: none; }
-            .login-form-panel {
-                width: 100%;
-                min-width: 100%;
-                min-height: 100vh;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .login-form-panel { padding: 30px 20px; }
-            .form-header h3 { font-size: 24px; }
-        }
-    </style>
+    <link href="assets/css/framework.css" rel="stylesheet" />
+    <link href="assets/css/auth.css" rel="stylesheet" />
 </head>
-<body>
+<body class="auth-body">
     <div class="login-wrapper">
         <!-- Left: Library Image Panel -->
         <div class="login-image-panel">
@@ -430,7 +146,8 @@ if(isset($_POST['login']))
                         <label>Password</label>
                         <div class="input-wrap">
                             <i class="fa fa-lock"></i>
-                            <input type="password" name="password" placeholder="Enter your password" required />
+                            <input type="password" name="password" id="password" placeholder="Enter your password" style="padding-right: 48px;" required />
+                            <i class="fa fa-eye toggle-password" id="togglePassword"></i>
                         </div>
                     </div>
 
@@ -453,5 +170,17 @@ if(isset($_POST['login']))
             </div>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 </html>
