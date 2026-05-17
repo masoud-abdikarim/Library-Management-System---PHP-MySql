@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('php/includes/config.php');
 
 // Clear any existing sessions
 if($_SESSION['login']!=''){
@@ -27,7 +27,7 @@ if(isset($_POST['login']))
     {
         // Admin login successful
         $_SESSION['alogin'] = $identifier;
-        echo "<script type='text/javascript'> document.location ='admin/dashboard.php'; </script>";
+        echo "<script type='text/javascript'> document.location ='php/admin/dashboard.php'; </script>";
     }
     else
     {
@@ -47,7 +47,7 @@ if(isset($_POST['login']))
                 if($result->Status == 1)
                 {
                     $_SESSION['login'] = $identifier;
-                    echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
+                    echo "<script type='text/javascript'> document.location ='php/dashboard.php'; </script>";
                 } else {
                     $error = "Your account has been blocked. Please contact the administrator.";
                 }
@@ -67,9 +67,9 @@ if(isset($_POST['login']))
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NEW HARGEISA LIBRARY | Sign In</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/framework.css" rel="stylesheet" />
-    <link href="assets/css/auth.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <link href="css/framework.css" rel="stylesheet" />
+    <link href="css/auth.css" rel="stylesheet" />
 </head>
 <body class="auth-body">
     <div class="login-wrapper">
@@ -155,7 +155,7 @@ if(isset($_POST['login']))
                         <label>
                             <input type="checkbox" /> Remember me
                         </label>
-                        <a href="user-forgot-password.php">Forgot password?</a>
+                        <a href="php/user-forgot-password.php">Forgot password?</a>
                     </div>
 
                     <button type="submit" name="login" class="btn-login">
@@ -164,7 +164,7 @@ if(isset($_POST['login']))
 
                     <div class="form-footer">
                         <span>Don't have an account?</span>
-                        <a href="signup.php">Create Account</a>
+                        <a href="php/signup.php">Create Account</a>
                     </div>
                 </form>
             </div>
