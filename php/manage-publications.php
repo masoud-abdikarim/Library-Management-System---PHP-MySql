@@ -2,30 +2,40 @@
 session_start();
 error_reporting(0);
 include('config.php');
-if(strlen($_SESSION['login'])==0)
+if(strlen($_SESSION['alogin'])==0)
     {   
 header('location:../index.php');
 }
-else{ 
-    ?>
+else{
+if(isset($_GET['del']))
+{
+$id=$_GET['del'];
+$sql = "delete from tblauthors  WHERE id=:id";
+$query = $dbh->prepare($sql);
+$query -> bindParam(':id',$id, PDO::PARAM_STR);
+$query -> execute();
+$_SESSION['delmsg']="Publication deleted";
+header('location:manage-publications.php');
+}
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php
-$page_title = 'NEW HARGEISA LIBRARY | Request a Book';
+$page_title = 'NEW HARGEISA LIBRARY | Manage Authors';
 $use_datatables = true;
 ?>
-<?php include('head.php'); ?>
+<?php include('admin-head.php'); ?>
 </head>
 <body>
       <!------MENU SECTION START-->
-<?php include('header.php');?>
+<?php include('admin-header.php');?>
 <!-- MENU SECTION END-->
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">AVAILABLE BOOKS</h4>
+                <h4 class="header-line">Manage Publications</h4>
     </div>
      <div class="row">
     <?php if($_SESSION['error']!="")
@@ -48,7 +58,16 @@ $use_datatables = true;
 </div>
 </div>
 <?php } ?>
-
+<?php if($_SESSION['updatemsg']!="")
+{?>
+<div class="col-md-6">
+<div class="alert alert-success" >
+ <strong>Success :</strong> 
+ <?php echo htmlentities($_SESSION['updatemsg']);?>
+<?php echo htmlentities($_SESSION['updatemsg']="");?>
+</div>
+</div>
+<?php } ?>
 
 
    <?php if($_SESSION['delmsg']!="")
@@ -63,13 +82,15 @@ $use_datatables = true;
 <?php } ?>
 
 </div>
+
+
         </div>
             <div class="row">
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          Select a Book to Request
+                           Publications Listing
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -77,17 +98,13 @@ $use_datatables = true;
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Book ID</th>
-                                            <th>Book Name</th>
-                                            <th>Category</th>
-                                            <th>Price</th>
+                                            <th>Publication</th>
+                                            <th>Creation Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php 
-// Using LEFT JOIN for Author so books without publications still show up
-$sql = "SELECT tblbooks.BookName,tblbooks.Copies,tblbooks.IssuedCopies,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId left join tblauthors on tblauthors.id=tblbooks.AuthorId";
+<?php $sql = "SELECT * from  tblauthors";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -95,38 +112,40 @@ $cnt=1;
 if($query->rowCount() > 0)
 {
 foreach($results as $result)
-{     
-if($result->Copies > $result->IssuedCopies)
-{          ?>                               
+{               ?>                                      
                                         <tr class="odd gradeX">
-										    
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
-                                            <td class="center">BK-<?php echo htmlentities($result->bookid);?></td>
-                                            <td class="center"><?php echo htmlentities($result->BookName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->CategoryName);?></td>
-                                            <td class="center"><?php echo htmlentities($result->BookPrice);?></td>
-											<td class="center">
-                                                <a href="temp.php?ISBNNumber=<?php echo $result->ISBNNumber;?>&BookName=<?php echo $result->BookName;?>&AuthorName=<?php echo $result->AuthorName;?>&CategoryName=<?php echo $result->CategoryName;?>&BookPrice=<?php echo $result->BookPrice;?>&StudName=<?php echo $_SESSION['username'];?>&StudentID=<?php echo $_SESSION['stdid'];?>">
-                                                    <button class="btn btn-primary" name="submit" id="submit" type="submit"><i class="fa fa-paper-plane"></i> Request</button>
-                                                </a>
-                                            </td>		
+                                            <td class="center"><?php echo htmlentities($result->AuthorName);?></td>
+                                            <td class="center"><?php echo htmlentities(date('Y-m-d', strtotime($result->creationDate)));?></td>
+                                            <td class="center">
+
+                                            <a href="edit-publication.php?athrid=<?php echo htmlentities($result->id);?>"><button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> 
+                                          <a href="javascript:void(0);" data-href="manage-publications.php?del=<?php echo htmlentities($result->id);?>" data-action="confirm" data-title="Delete Publication" data-msg="Are you sure you want to delete this publication? This action cannot be undone." class="btn btn-danger"><i class="fa fa-pencil"></i> Delete</a>
+                                            </td>
                                         </tr>
-<?php $cnt=$cnt+1;}}} ?>                                      
+ <?php $cnt=$cnt+1;}} ?>                                      
                                     </tbody>
                                 </table>
                             </div>
+                            
                         </div>
                     </div>
                     <!--End Advanced Tables -->
                 </div>
-            </div>    
+            </div>
+
+
+            
     </div>
     </div>
 
      <!-- CONTENT-WRAPPER SECTION END-->
+    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+    <!-- CORE JQUERY  -->
     <script src="../js/jquery-1.10.2.js"></script>
-    <script src="../js/dataTables/jquery.dataTables.js"></script>
-    <script src="../js/custom.js"></script>
+    <!-- BOOTSTRAP SCRIPTS  -->    <!-- DATATABLE SCRIPTS  -->
+    <script src="../js/jquery.dataTables.js"></script>      <!-- CUSTOM SCRIPTS  -->
+    <script src="../js/admin-custom.js"></script>
 </body>
 </html>
 <?php } ?>

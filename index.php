@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('php/includes/config.php');
+include('php/config.php');
 
 // Clear any existing sessions
 if($_SESSION['login']!=''){
@@ -27,7 +27,7 @@ if(isset($_POST['login']))
     {
         // Admin login successful
         $_SESSION['alogin'] = $identifier;
-        echo "<script type='text/javascript'> document.location ='php/admin/dashboard.php'; </script>";
+        echo "<script type='text/javascript'> document.location ='php/admin-dashboard.php'; </script>";
     }
     else
     {

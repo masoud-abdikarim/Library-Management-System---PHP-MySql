@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 include('config.php');
-if(strlen($_SESSION['login'])==0)
+if(strlen($_SESSION['alogin'])==0)
     {   
 header('location:../index.php');
 }
@@ -12,48 +12,49 @@ else{
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php
-$page_title = 'NEW HARGEISA LIBRARY | Borrow History';
+$page_title = 'NEW HARGEISA LIBRARY | Return History';
 $use_datatables = true;
 ?>
-<?php include('head.php'); ?>
+<?php include('admin-head.php'); ?>
 </head>
 <body>
-<?php include('header.php');?>
+<?php include('admin-header.php');?>
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4 class="header-line">MY BORROW HISTORY</h4>
+                <h4 class="header-line">COMPLETE RETURN HISTORY</h4>
             </div>
         </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Returned Books</div>
+                        <div class="panel-heading">Archived Returns</div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Student Name</th>
                                             <th>Book ID</th>
                                             <th>Book Name</th>
-                                            <th>Borrowed Date</th>
+                                            <th>Borrow Date</th>
                                             <th>Returned Date</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 <?php 
-$sid=$_SESSION['stdid'];
-$sql="SELECT tblbooks.BookName,tblbooks.id as bookid,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate 
-      FROM tblissuedbookdetails 
-      JOIN tblbooks ON tblbooks.id=tblissuedbookdetails.BookId 
-      WHERE tblissuedbookdetails.StudentId=:sid AND tblissuedbookdetails.ReturnStatus = 1 
-      ORDER BY tblissuedbookdetails.ReturnDate DESC";
+// Status 1: Returned
+$sql = "SELECT tblstudents.FullName,tblbooks.BookName,tblbooks.id as bookid,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid 
+        FROM tblissuedbookdetails 
+        JOIN tblstudents ON tblstudents.StudentId=tblissuedbookdetails.StudentId 
+        JOIN tblbooks ON tblbooks.id=tblissuedbookdetails.BookId 
+        WHERE tblissuedbookdetails.ReturnStatus = 1 
+        ORDER BY tblissuedbookdetails.ReturnDate DESC";
 $query = $dbh -> prepare($sql);
-$query-> bindParam(':sid', $sid, PDO::PARAM_STR);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $cnt=1;
@@ -63,6 +64,7 @@ foreach($results as $result)
 {               ?>                                      
                                         <tr class="odd gradeX">
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
+                                            <td class="center"><?php echo htmlentities($result->FullName);?></td>
                                             <td class="center">BK-<?php echo htmlentities($result->bookid);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookName);?></td>
                                             <td class="center"><?php echo htmlentities($result->IssuesDate);?></td>
@@ -80,8 +82,8 @@ foreach($results as $result)
     </div>
     </div>
     <script src="../js/jquery-1.10.2.js"></script>
-    <script src="../js/dataTables/jquery.dataTables.js"></script>
-    <script src="../js/custom.js"></script>
+    <script src="../js/jquery.dataTables.js"></script>
+    <script src="../js/admin-custom.js"></script>
 </body>
 </html>
 <?php } ?>

@@ -1,5 +1,5 @@
 <?php 
-require_once("includes/config.php");
+require_once("config.php");
 // code user email availablity
 if(!empty($_POST["emailid"])) {
 	$email= $_POST["emailid"];

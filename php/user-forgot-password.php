@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('config.php');
 if(isset($_POST['change']))
 {
   //code for captach verification
@@ -40,11 +40,11 @@ echo "<script>alert('Email id or Mobile no is invalid');</script>";
 <?php
 $page_title = 'NEW HARGEISA LIBRARY | Password Recovery';
 ?>
-<?php include('includes/head.php'); ?>
+<?php include('head.php'); ?>
 </head>
 <body>
     <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
+<?php include('header.php');?>
 <!-- MENU SECTION END-->
 <div class="content-wrapper">
 <div class="container">

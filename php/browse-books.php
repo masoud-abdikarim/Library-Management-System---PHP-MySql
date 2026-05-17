@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('config.php');
 if (strlen($_SESSION['login']) == 0) {
     header('location:../index.php');
 } else {
@@ -24,12 +24,12 @@ if (strlen($_SESSION['login']) == 0) {
 <?php
 $page_title = 'NEW HARGEISA LIBRARY | Browse Books';
 ?>
-<?php include('includes/head.php'); ?>
+<?php include('head.php'); ?>
     <link href="../css/catalog.css" rel="stylesheet" />
 </head>
 
     <body>
-        <?php include('includes/header.php'); ?>
+        <?php include('header.php'); ?>
 
         <div class="content-wrapper">
             <div class="container">

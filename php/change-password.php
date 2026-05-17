@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/config.php');
+include('config.php');
 error_reporting(0);
 if(strlen($_SESSION['login'])==0)
     {   
@@ -39,7 +39,7 @@ $error="Your current password is wrong";
 <?php
 $page_title = 'NEW HARGEISA LIBRARY |';
 ?>
-<?php include('includes/head.php'); ?>
+<?php include('head.php'); ?>
 </head>
 <script type="text/javascript">
 function valid()
@@ -56,7 +56,7 @@ return true;
 
 <body>
     <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
+<?php include('header.php');?>
 <!-- MENU SECTION END-->
 <div class="content-wrapper">
 <div class="container">
@@ -103,9 +103,7 @@ Change Password
  
     </div>
     </div>
-     <!-- CONTENT-WRAPPER SECTION END-->
- <?php include('includes/footer.php');?>
-      <!-- FOOTER SECTION END-->
+     <!-- FOOTER SECTION END-->
     <script src="../js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->      <!-- CUSTOM SCRIPTS  -->
     <script src="../js/custom.js"></script>

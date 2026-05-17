@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+include('config.php');
 if(strlen($_SESSION['login'])==0)
   { 
 header('location:../index.php');
@@ -12,10 +12,10 @@ $page_title = 'NEW HARGEISA LIBRARY | Dashboard';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php include('includes/head.php'); ?>
+<?php include('head.php'); ?>
 </head>
 <body>
-<?php include('includes/header.php');?>
+<?php include('header.php');?>
     <main class="content-wrapper">
         <div class="container">
             <h1 class="page-header">User Dashboard</h1>

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include('includes/config.php');
+include('config.php');
 error_reporting(0);
 if(strlen($_SESSION['login'])==0)
     {   
@@ -31,11 +31,11 @@ echo '<script>alert("Your profile has been updated")</script>';
 <?php
 $page_title = 'NEW HARGEISA LIBRARY | My Profile';
 ?>
-<?php include('includes/head.php'); ?>
+<?php include('head.php'); ?>
 </head>
 <body>
     <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
+<?php include('header.php');?>
 <!-- MENU SECTION END-->
     <div class="content-wrapper">
          <div class="container">

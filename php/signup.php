@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include('includes/config.php');
+include('config.php');
 error_reporting(0);
 
 $error = '';
@@ -9,7 +9,7 @@ $success = '';
 if(isset($_POST['signup']))
 {
 //Code for student ID
-$count_my_page = ("../studentid.txt");
+$count_my_page = ("studentid.txt");
 $hits = file($count_my_page);
 $hits[0] ++;
 $fp = fopen($count_my_page , "w");
